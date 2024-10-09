@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>风格迁移系统</title>
+</head>
+<body>
+    <h1>风格迁移系统</h1>
+    
+    <h2>训练模型</h2>
+    <form action="{% url 'train' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">开始训练模型</button>
+    </form>
+
+    <h2>执行风格迁移</h2>
+    <form method="post" enctype="multipart/form-data" action="{% url 'style_transfer' %}">
+        {% csrf_token %}
+        <label for="image">选择输入图像:</label>
+        <input type="file" name="image" required>
+        <button type="submit">开始风格迁移</button>
+    </form>
+
+    {% if uploaded_file_url %}
+        <h2>原始图像:</h2>
+        <img src="{{ uploaded_file_url }}" style="max-width: 300px;">
+    {% endif %}
+
+    {% if output_file_url %}
+        <h2>生成图像:</h2>
+        <img src="{{ output_file_url }}" style="max-width: 300px;">
+    {% endif %}
+</body>
+</html>
